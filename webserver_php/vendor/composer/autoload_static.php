@@ -15,10 +15,6 @@ class ComposerStaticInit785fce26567ece4b5fa30d02454e6937
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
-        'a' => 
-        array (
-            'api_bookmark\\' => 13,
-        ),
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
@@ -35,6 +31,10 @@ class ComposerStaticInit785fce26567ece4b5fa30d02454e6937
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\' => 16,
         ),
+        'A' => 
+        array (
+            'ApiBookmark\\' => 12,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -43,10 +43,6 @@ class ComposerStaticInit785fce26567ece4b5fa30d02454e6937
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-        ),
-        'api_bookmark\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src/api_bookmark',
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -75,6 +71,10 @@ class ComposerStaticInit785fce26567ece4b5fa30d02454e6937
         'Doctrine\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
+        ),
+        'ApiBookmark\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/ApiBookmark',
         ),
     );
 
