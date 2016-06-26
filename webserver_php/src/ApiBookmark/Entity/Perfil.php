@@ -15,12 +15,12 @@ class Perfil {
      * @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    public $id;
 
     /**
      * @Column(type="string", length=255)
      */
-    private $noPerfil;
+    public $noPerfil;
 
     public function __construct($id = "", $noPerfil = "")
     {

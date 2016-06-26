@@ -3,41 +3,10 @@
 namespace ApiBookmark\Persistence;
 
 use ApiBookmark\Entity\Perfil;
-use ApiBookmark\Service\Connection;
+use ApiBookmark\Persistence\AbstractDAO;
 
-class PerfilDAO {
-
-    private $entityPath = 'ApiBookmark/Entity/Perfil';
-    private $em;
-
-    // Construtor para pegar o gerenciador de entidades.
+class PerfilDAO extends AbstractDAO {
     public function __construct(){
-        $this->em = $this->createEntityManager();
+        parent::__construct('ApiBookmark\Entity\Perfil');
     }
-
-    public function createEntityManager(){
-        $conn = new Connection();
-        return $conn->getConnection();
-    }
-
-    public function listar(){
-
-    }
-
-    public function cadastrar(){
-
-    }
-
-    public function editar(){
-
-    }
-
-    public function deletar(){
-
-    }
-
-    public function buscar(){
-
-    }
-
 }

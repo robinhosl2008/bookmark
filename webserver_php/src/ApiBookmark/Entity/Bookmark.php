@@ -15,24 +15,24 @@ class Bookmark {
      * @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    public $id;
 
     /**
      * @Column(type="string", length=255)
      */
-    private $noBookmark;
+    public $noBookmark;
 
     /**
      * @ManyToOne(targetEntity="Usuario")
      * @JoinColumn(name="usuario", referencedColumnName="id")
      */
-    private $usuario;
+    public $usuario;
 
     /**
      * @DateTime
      * @Column(type="datetime")
      */
-    private $dataCad;
+    public $dataCad;
 
     function __construct($id = "", $noBookmark = "", $usuario = "", $dataCad = "")
     {
