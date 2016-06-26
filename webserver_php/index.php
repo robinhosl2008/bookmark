@@ -1,24 +1,26 @@
 <?php
 
-//    echo "Hello World!";
-
 // Carrega o autoload.php.
 $loader = require __DIR__.'/vendor/autoload.php';
-use ApiBookmark\Entity\Usuario;
+//
+use ApiBookmark\Entity\Perfil;
+//use Doctrine\ORM\EntityManager;
+//use Doctrine\ORM\Tools\Setup;
 
-$usuario = new Usuario();
-$usuario->setNoUsuario('Robson Lourenço');
-$usuario->setEmail('robinhosl2008@gmail.com');
+//require_once "bootstrap.php";
+//
+//$noPerfil = "teste1";
+//
+//$perfil = new Perfil();
+//$perfil->setNoPerfil($noPerfil);
+//
+//$entityManager->persist($perfil);
+//$entityManager->flush();
+//
+//echo "Perfil '".$noPerfil."' foi incluido no banco de dados.";
 
-$usuario_json = json_encode($usuario);
-$usuario_objeto = json_decode($usuario_json);
 
-echo "<pre>";
-print_r($usuario_json);
-echo "<br />";
-echo "<br />";
-print_r($usuario_objeto->noUsuario);
-echo "<br />";
-print_r($usuario_objeto->email);
+
+echo "Estamos no index.php";
 
 ?>

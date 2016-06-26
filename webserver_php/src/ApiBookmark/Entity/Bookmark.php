@@ -15,23 +15,31 @@ class Bookmark {
      * @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    private $id;
 
     /**
      * @Column(type="string", length=255)
      */
-    public $noBookmark;
+    private $noBookmark;
 
     /**
-     * @Column(type="integer")
+     * @ManyToOne(targetEntity="Usuario")
+     * @JoinColumn(name="usuario", referencedColumnName="id")
      */
-    public $usuario;
+    private $usuario;
 
-    function __construct($id = "", $noBookmark = "", $usuario = "")
+    /**
+     * @DateTime
+     * @Column(type="datetime")
+     */
+    private $dataCad;
+
+    function __construct($id = "", $noBookmark = "", $usuario = "", $dataCad = "")
     {
         $this->id = $id;
         $this->noBookmark = $noBookmark;
         $this->usuario = $usuario;
+        $this->dataCad = $dataCad;
     }
 
     /**
@@ -82,4 +90,19 @@ class Bookmark {
         $this->usuario = $usuario;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getDataCad()
+    {
+        return $this->dataCad;
+    }
+
+    /**
+     * @param \DateTime $dataCad
+     */
+    public function setDataCad($dataCad)
+    {
+        $this->dataCad = $dataCad;
+    }
 }

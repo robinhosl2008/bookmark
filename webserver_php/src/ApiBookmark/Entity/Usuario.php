@@ -18,7 +18,8 @@ class Usuario {
     public $id;
 
     /**
-     * @Column(type="integer")
+     * @ManyToOne(targetEntity="Perfil")
+     * @JoinColumn(name="perfil", referencedColumnName="id")
      */
     public $perfil;
 
@@ -43,7 +44,8 @@ class Usuario {
     public $senha;
 
     /**
-     * @Column(type="date")
+     * @DateTime
+     * @Column(type="datetime")
      */
     public $dataCad;
 
@@ -155,7 +157,7 @@ class Usuario {
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDataCad()
     {
@@ -163,16 +165,10 @@ class Usuario {
     }
 
     /**
-     * @param mixed $dataCad
+     * @param \DateTime $dataCad
      */
     public function setDataCad($dataCad)
     {
         $this->dataCad = $dataCad;
     }
-
-//    public function __construct(){
-//        $this->idUsuario = $array
-//    }
-
-
 }
