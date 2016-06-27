@@ -3,15 +3,14 @@
 // Carrega o autoload.php.
 $loader = require __DIR__.'/vendor/autoload.php';
 
-use ApiBookmark\Entity\Perfil;
-use ApiBookmark\Entity\Usuario;
-use ApiBookmark\Entity\Bookmark;
-use ApiBookmark\Persistence\PerfilDAO;
-use ApiBookmark\Persistence\UsuarioDAO;
-use ApiBookmark\Persistence\BookmarkDAO;
-use ApiBookmark\Persistence\AbstractDAO;
+use ApiBookmark\Controller\PerfilController;
+use ApiBookmark\Controller\BookmarkController;
+use ApiBookmark\Controller\UsuarioController;
 
-$perfilDao = new PerfilDAO();
+$perfilCtrl = new PerfilController();
+$bootmarkCtrl = new BookmarkController();
+$usuarioCtrl = new UsuarioController();
+
 $app = new \Slim\Slim();
 
 $app->get('/', function(){
@@ -21,42 +20,80 @@ $app->get('/', function(){
     ]);
 });
 
-$app->get('/perfil(/(:id))', function($id = null) use ($perfilDao){
-
-    echo json_encode($perfilDao->listar());
+// Sessão que cuida da entidade Perfil.
+$app->get('/perfil(/(:id))', function($id = null) use ($perfilCtrl){
+    echo json_encode($perfilCtrl->get($id));
 });
 
+$app->post('/perfil(/)', function() use ($perfilCtrl){
+    $app = \Slim\Slim::getInstance();
+    $json = json_decode($app->request()->getBody());
+    echo json_encode($perfilCtrl->insert($json));
+});
+
+$app->put('/perfil(/)', function() use ($perfilCtrl){
+    $app = \Slim\Slim::getInstance();
+    $json = json_decode($app->request()->getBody());
+    echo json_encode($perfilCtrl->update($json));
+});
+
+$app->delete('/perfil(/)', function() use ($perfilCtrl){
+    $app = \Slim\Slim::getInstance();
+    $json = json_decode($app->request()->getBody());
+    echo json_encode($perfilCtrl->delete($json));
+});
+// Fim da sessão.
+
+// Sessão que cuida da entidade Usuario.
+$app->get('/usuario(/(:id))', function($id = null) use ($usuarioCtrl){
+    echo json_encode($usuarioCtrl->get($id));
+});
+
+$app->post('/usuario(/)', function() use ($usuarioCtrl){
+    $app = \Slim\Slim::getInstance();
+    $json = json_decode($app->request()->getBody());
+    echo json_encode($usuarioCtrl->insert($json));
+});
+
+$app->put('/usuario(/)', function() use ($usuarioCtrl){
+    $app = \Slim\Slim::getInstance();
+    $json = json_decode($app->request()->getBody());
+    echo json_encode($usuarioCtrl->update($json));
+});
+
+$app->delete('/usuario(/)', function() use ($usuarioCtrl){
+    $app = \Slim\Slim::getInstance();
+    $json = json_decode($app->request()->getBody());
+    echo json_encode($usuarioCtrl->delete($json));
+});
+// Fim da sessão.
+
+// Sessão que cuida da entidade Bookmark.
+$app->get('/bookmark(/(:id))', function($id = null) use ($bootmarkCtrl){
+    echo json_encode($bootmarkCtrl->get($id));
+});
+
+$app->post('/bookmark(/)', function() use ($bootmarkCtrl){
+    $app = \Slim\Slim::getInstance();
+    $json = json_decode($app->request()->getBody());
+    echo json_encode($bootmarkCtrl->insert($json));
+});
+
+$app->put('/bookmark(/)', function() use ($bootmarkCtrl){
+    $app = \Slim\Slim::getInstance();
+    $json = json_decode($app->request()->getBody());
+    echo json_encode($bootmarkCtrl->update($json));
+});
+
+$app->delete('/bookmark(/)', function() use ($bootmarkCtrl){
+    $app = \Slim\Slim::getInstance();
+    $json = json_decode($app->request()->getBody());
+    echo json_encode($bootmarkCtrl->delete($json));
+});
+// Fim da sessão.
+
+
+
 $app->run();
-
-//$usuarioDao = new UsuarioDAO();
-//$perfilDao = new PerfilDAO();
-//$perfil = $perfilDao->buscar(3);
-
-
-
-//$usuario = new Usuario();
-//$usuario->setNoUsuario("Robson Lourenço");
-//$usuario->setEmail("robinhosl2008@gmai.com");
-//$usuario->setDataCad(new DateTime("now"));
-//$usuario->setPerfil(1);
-//$usuario->setLogin("robinhosl2008");
-//$usuario->setSenha("123456");
-//
-//$usuarioDao->cadastrar($usuario);
-//echo "<pre>";
-//print_r($usuario);
-//exit;
-
-//$bookmarkDao = new BookmarkDAO();
-//
-//$bookmark = new Bookmark();
-//$bookmark->setUsuario(2);
-//$bookmark->setNoBookmark("www.facebook.com.br");
-//$bookmark->setDataCad(new DateTime("now"));
-//
-//$bookmarkDao->cadastrar($bookmark);
-
-
-//echo "Estamos no index.php";
 
 ?>

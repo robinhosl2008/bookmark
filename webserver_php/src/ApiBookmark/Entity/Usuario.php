@@ -8,7 +8,7 @@ namespace ApiBookmark\Entity;
  * @Entity()
  * @Table(name="usuario")
  */
-class Usuario {
+class Usuario extends Entidade {
 
     /**
      * @Id
@@ -170,5 +170,31 @@ class Usuario {
     public function setDataCad($dataCad)
     {
         $this->dataCad = $dataCad;
+    }
+
+    /**
+     * @return string
+     */
+    public function toString(){
+        return "[id:"       .$this->id.
+             "] [noUsuario:".$this->noUsuario.
+             "] [email:"    .$this->email.
+             "] [perfil:"   .$this->perfil.
+             "] [login:"    .$this->login.
+             "] [dataCad"   .$this->dataCad."]";
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(){
+        return [
+            'id'        => $this->id,
+            'noUsuario' => $this->noBookmark,
+            'email'     => $this->dataCad,
+            'perfil'    => $this->dataCad,
+            'login'     => $this->dataCad,
+            'dataCad'   => $this->dataCad
+        ];
     }
 }

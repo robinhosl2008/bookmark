@@ -8,19 +8,19 @@ namespace ApiBookmark\Entity;
  * @Entity()
  * @Table(name="perfil")
  */
-class Perfil {
+class Perfil extends Entidade {
 
     /**
      * @Id
      * @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    private $id;
 
     /**
      * @Column(type="string", length=255)
      */
-    public $noPerfil;
+    private $noPerfil;
 
     public function __construct($id = "", $noPerfil = "")
     {
@@ -58,5 +58,23 @@ class Perfil {
     public function setNoPerfil($noPerfil)
     {
         $this->noPerfil = $noPerfil;
+    }
+
+    /**
+     * @return string
+     */
+    public function toString(){
+        return "[id:"   .$this->id.
+        "] [noPerfil:"   .$this->noPerfil."]";
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(){
+        return [
+            'id'         => $this->id,
+            'noPerfil'    => $this->noPerfil
+        ];
     }
 }

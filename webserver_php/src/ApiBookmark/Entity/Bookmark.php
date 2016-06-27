@@ -8,7 +8,7 @@ namespace ApiBookmark\Entity;
  * @Entity()
  * @Table(name="bookmark")
  */
-class Bookmark {
+class Bookmark extends Entidade {
 
     /**
      * @Id
@@ -105,4 +105,38 @@ class Bookmark {
     {
         $this->dataCad = $dataCad;
     }
+
+    /**
+     * @return string
+     */
+    public function toString(){
+        return "[id:"   .$this->id.
+        "] [noBookmark:".$this->noBookmark.
+        "] [usuario:"   .$this->usuario.
+        "] [dataCad:"   .$this->dataCad."]";
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(){
+        return [
+            'id'         => $this->id,
+            'noBookmark' => $this->noBookmark,
+            'usuario'    => $this->usuario,
+            'dataCad'    => $this->dataCad
+        ];
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
