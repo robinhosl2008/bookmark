@@ -181,6 +181,7 @@ class Usuario extends Entidade {
              "] [email:"    .$this->email.
              "] [perfil:"   .$this->perfil.
              "] [login:"    .$this->login.
+             "] [senha:"    .$this->senha.
              "] [dataCad"   .$this->dataCad."]";
     }
 
@@ -190,10 +191,11 @@ class Usuario extends Entidade {
     public function toArray(){
         return [
             'id'        => $this->id,
-            'noUsuario' => $this->noBookmark,
-            'email'     => $this->dataCad,
-            'perfil'    => $this->dataCad,
-            'login'     => $this->dataCad,
+            'noUsuario' => $this->noUsuario,
+            'email'     => $this->email,
+            'perfil'    => $this->perfil,
+            'login'     => $this->login,
+            'senha'     => $this->senha,
             'dataCad'   => $this->dataCad
         ];
     }

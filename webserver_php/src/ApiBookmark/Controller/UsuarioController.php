@@ -30,9 +30,9 @@ class UsuarioController {
                 $data[] = $usuario->toArray();
             }
         }else{
-            $usuario = $this->getDao()->buscar($id);
+            $obj = $this->getDao()->buscar($id);
             if(isset($obj)){
-                $data [] = $usuario->toArray();
+                $data [] = $obj->toArray();
             }else{
                 $data [] = "";
             }
@@ -47,8 +47,9 @@ class UsuarioController {
         return ['mensagem' => 'Usuário cadastrado com sucesso!'];
     }
 
-    public function update($json){
+    public function update($json){ //echo "<pre>"; print_r($json); exit;
         $usuario = new Usuario($json->id, $json->perfil, $json->noUsuario, $json->email, $json->login, $json->senha, $json->dataCad);
+//        echo "<pre>"; print_r($usuario); exit;
         $this->getDao()->editar($usuario);
         return ['mensagem' => 'Usuário editado com sucesso!'];
     }

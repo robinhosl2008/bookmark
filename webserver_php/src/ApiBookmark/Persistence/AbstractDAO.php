@@ -39,7 +39,7 @@ class AbstractDAO {
         $this->entityManager->flush();
     }
 
-    public function editar($obj) {
+    public function editar($obj) { // echo "<pre>"; print_r($obj); exit;
         $this->entityManager->merge($obj);
         $this->entityManager->flush();
     }
@@ -50,7 +50,7 @@ class AbstractDAO {
     }
 
     public function buscar($id) {
-        $usuario = $this->entityManager->find($this->entityPath, $id);
-        return $usuario;
+        $obj = $this->entityManager->find($this->entityPath, $id);
+        return $obj;
     }
 }

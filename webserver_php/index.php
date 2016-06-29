@@ -58,6 +58,7 @@ $app->post('/usuario(/)', function() use ($usuarioCtrl){
 $app->put('/usuario(/)', function() use ($usuarioCtrl){
     $app = \Slim\Slim::getInstance();
     $json = json_decode($app->request()->getBody());
+//    echo "<pre>"; print_r($json); exit;
     echo json_encode($usuarioCtrl->update($json));
 });
 
@@ -69,7 +70,7 @@ $app->delete('/usuario(/)', function() use ($usuarioCtrl){
 // Fim da sessão.
 
 // Sessão que cuida da entidade Bookmark.
-$app->get('/bookmark(/(:id))', function($id = null) use ($bootmarkCtrl){
+$app->get('/bookmark(/(:id))', function($id = null) use ($bootmarkCtrl){ //echo $id; exit;
     echo json_encode($bootmarkCtrl->get($id));
 });
 

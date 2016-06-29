@@ -30,9 +30,9 @@ class BookmarkController {
                 $data[] = $bookmark->toArray();
             }
         }else{
-            $bookmark = $this->getDao()->buscar($id);
+            $obj = $this->getDao()->buscar($id);
             if(isset($obj)){
-                $data [] = $bookmark->toArray();
+                $data [] = $obj->toArray();
             }else{
                 $data [] = "";
             }
