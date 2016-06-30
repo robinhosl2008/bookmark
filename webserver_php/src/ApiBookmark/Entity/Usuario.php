@@ -18,8 +18,7 @@ class Usuario extends Entidade {
     public $id;
 
     /**
-     * @ManyToOne(targetEntity="Perfil")
-     * @JoinColumn(name="perfil", referencedColumnName="id")
+     * @Column(type="integer")
      */
     public $perfil;
 

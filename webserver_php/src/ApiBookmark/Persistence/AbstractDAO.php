@@ -39,7 +39,7 @@ class AbstractDAO {
         $this->entityManager->flush();
     }
 
-    public function editar($obj) { // echo "<pre>"; print_r($obj); exit;
+    public function editar($obj) {
         $this->entityManager->merge($obj);
         $this->entityManager->flush();
     }

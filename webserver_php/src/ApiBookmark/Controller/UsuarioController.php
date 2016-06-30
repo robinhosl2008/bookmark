@@ -4,6 +4,7 @@ namespace ApiBookmark\Controller;
 
 use ApiBookmark\Entity\Usuario;
 use ApiBookmark\Persistence\UsuarioDAO;
+use ApiBookmark\Persistence\PerfilDAO;
 
 class UsuarioController {
 
@@ -47,10 +48,26 @@ class UsuarioController {
         return ['mensagem' => 'Usuário cadastrado com sucesso!'];
     }
 
-    public function update($json){ //echo "<pre>"; print_r($json); exit;
-        $usuario = new Usuario($json->id, $json->perfil, $json->noUsuario, $json->email, $json->login, $json->senha, $json->dataCad);
-//        echo "<pre>"; print_r($usuario); exit;
-        $this->getDao()->editar($usuario);
+    public function update($json){
+        $usuario = $this->getDao()->buscar($json->id);
+
+
+        if(isset($usuario)){
+            $usuario->noUsuario = $json->noUsuario;
+            $usuario->email = $json->email;
+
+            if($json->perfil != $usuario->perfil->getId()){
+                $perfilDao = new PerfilDAO();
+                $perfil = $perfilDao->buscar($json->perfil);
+
+                $usuario->perfil = $perfil->getId();
+            }
+//print_r($usuario); exit;
+            $this->getDao()->editar($usuario);
+        }
+
+//        $usuario = new Usuario($json->id, $json->perfil, $json->noUsuario, $json->email, $json->login, $json->senha, $json->dataCad);
+
         return ['mensagem' => 'Usuário editado com sucesso!'];
     }
 

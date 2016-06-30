@@ -21,7 +21,6 @@ class PerfilController {
         $this->dao = $dao;
     }
 
-    // request
     public function get($id = null){
         $data = [];
         if($id == null){
@@ -43,13 +42,14 @@ class PerfilController {
     }
 
     public function insert($json){
-        $perfil = new Perfil($json->id, $json->noPerfil);
+        $perfil = new Perfil($json->id, $json->noPerfil); // print_r($perfil); exit;
         $this->getDao()->cadastrar($perfil);
         return ['mensagem' => 'Perfil cadastrado com sucesso!'];
     }
 
     public function update($json){
-        $perfil = new Perfil($json->id, $json->noPerfil);
+        $perfil = $this->getDao()->buscar($json->id);
+        $perfil->setNoPerfil($json->noPerfil);
         $this->getDao()->editar($perfil);
         return ['mensagem' => 'Perfil editado com sucesso!'];
     }

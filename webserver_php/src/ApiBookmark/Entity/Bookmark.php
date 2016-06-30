@@ -23,8 +23,7 @@ class Bookmark extends Entidade {
     public $noBookmark;
 
     /**
-     * @ManyToOne(targetEntity="Usuario")
-     * @JoinColumn(name="usuario", referencedColumnName="id")
+     * @Column(type="integer")
      */
     public $usuario;
 
