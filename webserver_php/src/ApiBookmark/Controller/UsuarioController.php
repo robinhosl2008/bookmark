@@ -67,12 +67,19 @@ class UsuarioController {
 
             $this->getDao()->editar($usuario);
             return ['mensagem' => 'Usuário editado com sucesso!'];
+        }else{
+            return ['mensagem' => 'Registro não encontrado'];
         }
     }
 
     public function delete($json){
         $usuario = $this->getDao()->buscar($json->id);
-        $this->getDao()->deletar($usuario);
-        return ['mensagem' => 'Usuário excluido com sucesso!'];
+
+        if(isset($usuario)){
+            $this->getDao()->deletar($usuario);
+            return ['mensagem' => 'Usuário excluido com sucesso!'];
+        }else{
+            return ['mensagem' => 'Registro não encontrado'];
+        }
     }
 }

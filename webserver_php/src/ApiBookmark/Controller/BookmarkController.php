@@ -42,20 +42,38 @@ class BookmarkController {
     }
 
     public function insert($json){
-        $bookmark = new Bookmark($json->id, $json->usuario, $json->noBookmark, $json->dataCad);
+        $bookmark = new Bookmark();
+        $bookmark->setNoBookmark($json->noBookmark);
+        $bookmark->setUsuario($json->usuario);
+        $bookmark->setDataCad(new \DateTime());
+
         $this->getDao()->cadastrar($bookmark);
         return ['mensagem' => 'Bookmark cadastrado com sucesso!'];
     }
 
     public function update($json){
-        $bookmark = new Bookmark($json->id, $json->usuario, $json->noBookmark, $json->dataCad);
-        $this->getDao()->editar($bookmark);
-        return ['mensagem' => 'Bookmark editado com sucesso!'];
+        $bookmark = $this->getDao()->buscar($json->id);
+
+        if(isset($bookmark)){
+            $bookmark->setNoBookmark($json->noBookmark);
+            $bookmark->setUsuario($json->usuario);
+
+            $this->getDao()->editar($bookmark);
+            return ['mensagem' => 'Bookmark editado com sucesso!'];
+        }else{
+            return ['mensagem' => 'Registro não encontrado'];
+        }
+
     }
 
     public function delete($json){
-        $usuario = $this->getDao()->buscar($json->id);
-        $this->getDao()->deletar($usuario);
-        return ['mensagem' => 'Bookmark excluido com sucesso!'];
+        $bookmark = $this->getDao()->buscar($json->id);
+
+        if(isset($bookmark)){
+            $this->getDao()->deletar($bookmark);
+            return ['mensagem' => 'Bookmark excluido com sucesso!'];
+        }else{
+            return ['mensagem' => 'Registro não encontrado'];
+        }
     }
 }

@@ -49,15 +49,26 @@ class PerfilController {
 
     public function update($json){
         $perfil = $this->getDao()->buscar($json->id);
-        $perfil->setNoPerfil($json->noPerfil);
-        $this->getDao()->editar($perfil);
-        return ['mensagem' => 'Perfil editado com sucesso!'];
+
+        if(isset($perfil)){
+            $perfil->setNoPerfil($json->noPerfil);
+
+            $this->getDao()->editar($perfil);
+            return ['mensagem' => 'Perfil editado com sucesso!'];
+        }else{
+            return ['mensagem' => 'Registro não encontrado'];
+        }
     }
 
     public function delete($json){
         $perfil = $this->getDao()->buscar($json->id);
-        $this->getDao()->deletar($perfil);
-        return ['mensagem' => 'Perfil excluido com sucesso!'];
+
+        if(isset($perfil)){
+            $this->getDao()->deletar($perfil);
+            return ['mensagem' => 'Perfil excluido com sucesso!'];
+        }else{
+            return ['mensagem' => 'Registro não encontrado'];
+        }
     }
 }
 

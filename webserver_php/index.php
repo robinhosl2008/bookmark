@@ -69,7 +69,7 @@ $app->delete('/usuario(/)', function() use ($usuarioCtrl){
 // Fim da sessão.
 
 // Sessão que cuida da entidade Bookmark.
-$app->get('/bookmark(/(:id))', function($id = null) use ($bootmarkCtrl){ //echo $id; exit;
+$app->get('/bookmark(/(:id))', function($id = null) use ($bootmarkCtrl){
     echo json_encode($bootmarkCtrl->get($id));
 });
 
