@@ -27,7 +27,7 @@ $app->get('/perfil(/(:id))', function($id = null) use ($perfilCtrl){
 
 $app->post('/perfil(/)', function() use ($perfilCtrl){
     $app = \Slim\Slim::getInstance();
-    $json = json_decode($app->request()->getBody()); // print_r($json); exit;
+    $json = json_decode($app->request()->getBody());
     echo json_encode($perfilCtrl->insert($json));
 });
 
@@ -51,7 +51,7 @@ $app->get('/usuario(/(:id))', function($id = null) use ($usuarioCtrl){
 
 $app->post('/usuario(/)', function() use ($usuarioCtrl){
     $app = \Slim\Slim::getInstance();
-    $json = json_decode($app->request()->getBody()); print_r($json); exit;
+    $json = json_decode($app->request()->getBody());
     echo json_encode($usuarioCtrl->insert($json));
 });
 

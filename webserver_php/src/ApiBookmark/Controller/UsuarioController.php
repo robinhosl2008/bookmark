@@ -43,7 +43,14 @@ class UsuarioController {
     }
 
     public function insert($json){
-        $usuario = new Usuario($json->id, $json->perfil, $json->noUsuario, $json->email, $json->login, $json->senha, $json->dataCad);
+        $usuario = new Usuario();
+        $usuario->setNoUsuario($json->noUsuario);
+        $usuario->setPerfil($json->perfil);
+        $usuario->setEmail($json->email);
+        $usuario->setLogin($json->login);
+        $usuario->setSenha($json->senha);
+        $usuario->setDataCad(new \DateTime());
+
         $this->getDao()->cadastrar($usuario);
         return ['mensagem' => 'Usuário cadastrado com sucesso!'];
     }
@@ -51,24 +58,16 @@ class UsuarioController {
     public function update($json){
         $usuario = $this->getDao()->buscar($json->id);
 
-
         if(isset($usuario)){
-            $usuario->noUsuario = $json->noUsuario;
-            $usuario->email = $json->email;
+            $usuario->setNoUsuario($json->noUsuario);
+            $usuario->setPerfil($json->perfil);
+            $usuario->setEmail($json->email);
+            $usuario->setLogin($json->login);
+            $usuario->setSenha($json->senha);
 
-            if($json->perfil != $usuario->perfil->getId()){
-                $perfilDao = new PerfilDAO();
-                $perfil = $perfilDao->buscar($json->perfil);
-
-                $usuario->perfil = $perfil->getId();
-            }
-//print_r($usuario); exit;
             $this->getDao()->editar($usuario);
+            return ['mensagem' => 'Usuário editado com sucesso!'];
         }
-
-//        $usuario = new Usuario($json->id, $json->perfil, $json->noUsuario, $json->email, $json->login, $json->senha, $json->dataCad);
-
-        return ['mensagem' => 'Usuário editado com sucesso!'];
     }
 
     public function delete($json){

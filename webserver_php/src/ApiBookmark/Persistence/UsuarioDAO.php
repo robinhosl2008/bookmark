@@ -12,11 +12,11 @@ class UsuarioDAO extends AbstractDAO {
         parent::__construct('ApiBookmark\Entity\Usuario');
     }
 
-    public function cadastrar(Usuario $obj) {
-        $perfil = $this->entityManager->find('ApiBookmark\Entity\Perfil', $obj->getPerfil());
-        $obj->setPerfil($perfil);
-        $time = new DateTime("now");
-        $obj->setDataCad($time);
-        parent::cadastrar($obj);
-    }
+//    public function cadastrar(Usuario $obj) {
+//        $perfil = $this->entityManager->find('ApiBookmark\Entity\Perfil', $obj->getPerfil());
+//        $obj->setPerfil($perfil);
+//        $time = new DateTime("now");
+//        $obj->setDataCad($time);
+//        parent::cadastrar($obj);
+//    }
 }
