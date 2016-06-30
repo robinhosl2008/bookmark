@@ -1,0 +1,16 @@
+Este é um projéto realizado por mim (Robson Souza Lourenço) 
+utilizando a linguagem de programação PHP e outras tecnologias.
+Esta tarefa tem como objetivo me incluir no processo seletivo
+da empresa M4U. Pelo o que entendi na descrição da tarefa,
+deveria ser desenvolvida uma API RESTFULL para controlar as
+informações do banco de dados e um sistema utilizando o
+Framework Symfony 2 para consumir os serviços da API e ter
+interação com o cliente. Ambos utilizando o servidor WEB NGINX.
+
+A API foi desenvolvida utilizando POO, também foram utilizadas 
+algumas bibliotecas como o Doctrine para mapear o banco de
+dados e o Framework Slim para receber e responder às requisições.
+
+O banco de dados foi criado utilizando MySQL.
+
+
