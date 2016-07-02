@@ -42,7 +42,7 @@ class PerfilController {
     }
 
     public function insert($json){
-        $perfil = new Perfil($json->id, $json->noPerfil); // print_r($perfil); exit;
+        $perfil = new Perfil($json->id, $json->noPerfil);
         $this->getDao()->cadastrar($perfil);
         return ['mensagem' => 'Perfil cadastrado com sucesso!'];
     }

@@ -1,8 +1,3 @@
-bookmark:
-    resource: "@BookmarkBundle/Controller/"
-    type:     annotation
-    prefix:   /
+_bookmark:
+    resource: "@BookmarkBundle/Resources/config/routing.yml"
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
