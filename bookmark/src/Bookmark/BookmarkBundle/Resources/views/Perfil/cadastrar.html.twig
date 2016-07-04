@@ -4,13 +4,14 @@
 
 {% block body %}
     <div class="col-sm-12">
-        <form method="post" action="cadastrar">
+        <form method="post" action="">
             <div class="form-group">
                 <label for="noPerfil">Nome do perfil: </label>
                 <input type="text" class="form-control" id="noPerfil" name="noPerfil" />
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Salvar" />
+                <input type="button" class="btn btn-default" value="Voltar" onclick="javascript:history.go(-1)" />
             </div>
         </form>
     </div>

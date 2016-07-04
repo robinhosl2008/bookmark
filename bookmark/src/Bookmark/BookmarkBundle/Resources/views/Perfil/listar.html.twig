@@ -5,26 +5,24 @@
 {% block body %}
     <div class="col-sm-12">
         <div>
-            <a href="http://localhost:8000/perfil/cadastrar" class="btn btn-primary" >Cadastrar</a>
+            <a href="http://localhost:8001/perfil/cadastrar" class="btn btn-primary" >Cadastrar</a>
         </div>
 
         <div style="padding-top: 20px">
             <table class="table table-bordered">
                 <thead>
                     <tr style="background-color: dodgerblue">
-                        <td>ID</td>
-                        <td>PERFIL</td>
+                        <td>PERFIS</td>
                         <td>AÇÕES</td>
                     </tr>
                 </thead>
                 <tbody>
                     {% for perfil in perfis %}
                     <tr>
-                        <td>{{ perfil.id }}</td>
                         <td>{{ perfil.noPerfil }}</td>
                         <td>
-                            <a href="#"><label class="glyphicon glyphicon-pencil"></label></a>
-                            <a href="#"><label style="color: darkred" class="glyphicon glyphicon-remove"></label></a>
+                            <a href="/perfil/editar/{{ perfil.id }}"><label class="glyphicon glyphicon-pencil"></label></a>
+                            <a href="/perfil/deletar/{{ perfil.id }}"><label style="color: darkred" class="glyphicon glyphicon-remove"></label></a>
                         </td>
                     </tr>
                     {% endfor %}

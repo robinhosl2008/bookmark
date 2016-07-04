@@ -1,0 +1,33 @@
+{% extends "BookmarkBundle::Layout/layout.html.twig" %}
+
+{% block title %}Lista de bookmarks{% endblock %}
+
+{% block body %}
+    <div class="col-sm-12">
+        <div>
+            <a href="http://localhost:8001/bookmark/cadastrar" class="btn btn-primary" >Cadastrar Bookmark</a>
+        </div>
+
+        <div style="padding-top: 20px">
+            <table class="table table-bordered">
+                <thead>
+                <tr style="background-color: dodgerblue">
+                    <td>BOOKMARKS</td>
+                    <td>AÇÕES</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for bookmark in bookmarks %}
+                    <tr>
+                        <td>{{ bookmark.noBookmark }}</td>
+                        <td>
+                            <a href="/bookmark/editar/{{ bookmark.id }}"><label class="glyphicon glyphicon-pencil"></label></a>
+                            <a href="/bookmark/deletar/{{ bookmark.id }}"><label style="color: darkred" class="glyphicon glyphicon-remove"></label></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

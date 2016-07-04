@@ -1,0 +1,43 @@
+{% extends "BookmarkBundle::Layout/layout.html.twig" %}
+
+{% block title %}Lista de Usuários{% endblock %}
+
+{% block body %}
+    <div class="col-sm-12">
+        <div>
+            <a href="cadastrar" class="btn btn-primary">Cadastrar Usuário</a>
+        </div>
+
+        <div style="padding-top: 20px">
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr style="background-color: dodgerblue">
+                        <td>USUARIOS</td>
+                        <td>E-MAIL</td>
+                        <td>PERFIL</td>
+                        <td>AÇÕES</td>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.noUsuario }}</td>
+                        <td>{{ usuario.email }}</td>
+                        <td>
+                            {% for perfil in perfis %}
+                                {% if perfil.id == usuario.perfil %}
+                                    {{ perfil.noPerfil }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="/usuario/editar/{{ usuario.id }}"><label class="glyphicon glyphicon-pencil"></label></a>
+                            <a href="/usuario/deletar/{{ usuario.id }}"><label style="color: darkred" class="glyphicon glyphicon-remove"></label></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

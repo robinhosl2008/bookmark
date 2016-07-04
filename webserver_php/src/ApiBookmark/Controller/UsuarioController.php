@@ -62,8 +62,6 @@ class UsuarioController {
             $usuario->setNoUsuario($json->noUsuario);
             $usuario->setPerfil($json->perfil);
             $usuario->setEmail($json->email);
-            $usuario->setLogin($json->login);
-            $usuario->setSenha($json->senha);
 
             $this->getDao()->editar($usuario);
             return ['mensagem' => 'Usuário editado com sucesso!'];

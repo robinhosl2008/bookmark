@@ -5,6 +5,8 @@ namespace Bookmark\BookmarkBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use GuzzleHttp\Client;
+
 
 /**
  * Class PerfilController
@@ -18,17 +20,9 @@ class PerfilController extends Controller
      */
     public function listarAction()
     {
-        // Inicia o Curl.
-        $ch = curl_init();
-
-        // Informa a URL e outras informações ao Curl.
-        curl_setopt($ch, CURLOPT_URL, "http://localhost:8001/perfil");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $result = curl_exec($ch);
-        curl_close($ch);
-
-        $perfis = json_decode($result);
+        $client = new Client();
+        $result = $client->get('http://localhost:8000/perfil');
+        $perfis = json_decode($result->getBody()->__toString());
 
         return $this->render('BookmarkBundle:Perfil:listar.html.twig', array('perfis' => $perfis));
     }
@@ -38,57 +32,61 @@ class PerfilController extends Controller
      */
     public function cadastrarAction(Request $request)
     {
-        $array = "";
+        if($_POST){
+            $noPerfil = $request->get('noPerfil');
 
-        if($request->get("noPerfil") != ""){
-            $noPerfil = $request->get("noPerfil");
-
-            $array = [
-                "id" => "",
-                "noPerfil" => $noPerfil,
-            ];
-
-            $json = json_encode($array);
-
-            // Inicia o Curl.
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, "http://localhost:8001/perfil");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-
-            $mensagem = curl_exec($ch);
-
-            curl_close($ch);
+            $client = new Client();
+            $client->request('POST', 'http://localhost:8000/perfil', array('json' => ['id' => '', 'noPerfil' => $noPerfil]));
 
             return $this->redirect('/perfil/listar');
         }
-
-
-
-
-            return $this->render('BookmarkBundle:Perfil:cadastar.html.twig', array());
+            return $this->render('BookmarkBundle:Perfil:cadastrar.html.twig', array());
     }
 
     /**
-     * @Route("/editar")
+     * @Route("/editar/{id}")
      */
-    public function editarAction()
+    public function editarAction(Request $request)
     {
-        return $this->render('BookmarkBundle:Perfil:editar.html.twig', array(
-            // ...
-        ));
+        if($_POST){
+            $dados = ['json' => ['id' => $request->get('id'), 'noPerfil' => $request->get('noPerfil')]];
+
+            $client = new Client();
+            $result = $client->request('PUT', 'http://localhost:8000/perfil', $dados);
+
+            return $this->redirect('/perfil/listar');
+        }else {
+            $id = $request->get('id');
+
+            // Instancia o cliente Guzzle.
+            $client = new Client();
+
+            // Envia a requisição para a API e atribui o resultado a uma variável.
+            $result = $client->request('GET', "http://localhost:8000/perfil/$id", array());
+
+            // Converte o Json vindo da API em array.
+            $arrayPerfil = json_decode($result->getBody()->__toString());
+
+            // Pega o objeto dentro do array.
+            $perfil = $arrayPerfil[0];
+
+            //echo "<pre>"; var_dump($perfil); exit;
+
+            return $this->render('BookmarkBundle:Perfil:editar.html.twig', ['perfil' => $perfil]);
+        }
     }
 
     /**
-     * @Route("/deletar")
+     * @Route("/deletar/{id}")
      */
-    public function deletarAction()
+    public function deletarAction(Request $request)
     {
-        return $this->render('BookmarkBundle:Perfil:deletar.html.twig', array(
-            // ...
-        ));
+        $id = $request->get('id');
+
+        $client = new Client();
+        $result = $client->request('DELETE', 'http://localhost:8000/perfil', ['json' => ['id' => $id]]);
+
+        return $this->redirect('/perfil/listar');
     }
 
     /**
