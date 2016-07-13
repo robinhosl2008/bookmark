@@ -1,16 +1,26 @@
 Este é um projéto realizado por mim (Robson Souza Lourenço) 
 utilizando a linguagem de programação PHP e outras tecnologias.
-Esta tarefa tem como objetivo me incluir no processo seletivo
-da empresa M4U. Pelo o que entendi na descrição da tarefa,
-deveria ser desenvolvida uma API RESTFULL para controlar as
-informações do banco de dados e um sistema utilizando o
-Framework Symfony 2 para consumir os serviços da API e ter
-interação com o cliente. Ambos utilizando o servidor WEB NGINX.
+Este trabalho tem como objetivo me incluir no processo seletivo
+da empresa M4U. No início do desenvolvimento do projeto ficou 
+entendido por mim, na descrição da tarefa, que deveria ser 
+desenvolvida uma API no padrão RESTFULL para controlar as 
+informações do banco de dados e um sistema utilizando o Framework 
+Symfony 2 para consumir os serviços da API e ter interação com 
+o cliente. Ambos utilizando o servidor WEB NGINX.
 
+API Restfull
 A API foi desenvolvida utilizando POO, também foram utilizadas 
 algumas bibliotecas como o Doctrine para mapear o banco de
 dados e o Framework Slim para receber e responder às requisições.
+A API está na pasta 'webserver_php' e o banco de dados foi criado 
+utilizando MySQL e o backap do mesmo encontra-se na pasta 'info_banco'. 
 
-O banco de dados foi criado utilizando MySQL.
+Sistema Symfony 2
+O sistema que irá consumir os dados da API foi desenvolvido utilizando
+symfony 2, de acordo com o que foi solicitado na tarefa. Como as 
+entidades estavam na API, não foi possível usar a autenticação
+do framework. Por isso, tive que criar a autenticação utilizando
+as variáveis de sessão do usuário. Isso para dar acesso a funcionalidades
+e views.
 
 
