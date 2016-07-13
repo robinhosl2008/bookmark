@@ -45,7 +45,8 @@ class BookmarkController {
         $bookmark = new Bookmark();
         $bookmark->setNoBookmark($json->noBookmark);
         $bookmark->setUsuario($json->usuario);
-        $bookmark->setDataCad(new \DateTime());
+        $bookmark->setCreatedAt(new \DateTime());
+        $bookmark->setUpdatedAt(new \DateTime());
 
         $this->getDao()->cadastrar($bookmark);
         return ['mensagem' => 'Bookmark cadastrado com sucesso!'];
@@ -56,7 +57,7 @@ class BookmarkController {
 
         if(isset($bookmark)){
             $bookmark->setNoBookmark($json->noBookmark);
-            $bookmark->setUsuario($json->usuario);
+            $bookmark->setUpdatedAt(new \DateTime());
 
             $this->getDao()->editar($bookmark);
             return ['mensagem' => 'Bookmark editado com sucesso!'];
@@ -75,5 +76,11 @@ class BookmarkController {
         }else{
             return ['mensagem' => 'Registro não encontrado'];
         }
+    }
+
+    public function buscar($id){
+        $bookmarks = $this->getDao()->listarById($id);
+
+        return $bookmarks;
     }
 }

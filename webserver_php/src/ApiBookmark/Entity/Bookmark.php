@@ -31,18 +31,25 @@ class Bookmark extends Entidade {
      * @DateTime
      * @Column(type="datetime")
      */
-    public $dataCad;
+    public $createdAt;
 
-    function __construct($id = "", $noBookmark = "", $usuario = "", $dataCad = "")
+    /**
+     * @DateTime
+     * @Column(type="datetime")
+     */
+    public $updatedAt;
+
+    function __construct($id = "", $noBookmark = "", $usuario = "", $createdAt = "", $updatedAt = "")
     {
         $this->id = $id;
         $this->noBookmark = $noBookmark;
         $this->usuario = $usuario;
-        $this->dataCad = $dataCad;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getId()
     {
@@ -50,7 +57,7 @@ class Bookmark extends Entidade {
     }
 
     /**
-     * @param mixed $id
+     * @param $id
      */
     public function setId($id)
     {
@@ -58,7 +65,7 @@ class Bookmark extends Entidade {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getNoBookmark()
     {
@@ -66,7 +73,7 @@ class Bookmark extends Entidade {
     }
 
     /**
-     * @param mixed $noBookmark
+     * @param $noBookmark
      */
     public function setNoBookmark($noBookmark)
     {
@@ -74,7 +81,7 @@ class Bookmark extends Entidade {
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getUsuario()
     {
@@ -82,7 +89,7 @@ class Bookmark extends Entidade {
     }
 
     /**
-     * @param mixed $usuario
+     * @param $usuario
      */
     public function setUsuario($usuario)
     {
@@ -92,17 +99,33 @@ class Bookmark extends Entidade {
     /**
      * @return \DateTime
      */
-    public function getDataCad()
+    public function getCreatedAt()
     {
-        return $this->dataCad;
+        return $this->createdAt;
     }
 
     /**
-     * @param \DateTime $dataCad
+     * @param \DateTime $createdAt
      */
-    public function setDataCad($dataCad)
+    public function setCreatedAt($createdAt)
     {
-        $this->dataCad = $dataCad;
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -112,7 +135,8 @@ class Bookmark extends Entidade {
         return "[id:"   .$this->id.
         "] [noBookmark:".$this->noBookmark.
         "] [usuario:"   .$this->usuario.
-        "] [dataCad:"   .$this->dataCad."]";
+        "] [createdAt:"   .$this->createdAt.
+        "] [updatedAt:"   .$this->updatedAt."]";
     }
 
     /**
@@ -123,7 +147,8 @@ class Bookmark extends Entidade {
             'id'         => $this->id,
             'noBookmark' => $this->noBookmark,
             'usuario'    => $this->usuario,
-            'dataCad'    => $this->dataCad
+            'createdAt'    => $this->createdAt,
+            'updatedAt'    => $this->updatedAt
         ];
     }
 }

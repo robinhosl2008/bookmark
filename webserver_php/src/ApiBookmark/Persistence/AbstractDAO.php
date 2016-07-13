@@ -10,7 +10,6 @@ namespace ApiBookmark\Persistence;
 
 use ApiBookmark\Service\Connection;
 use ApiBookmark\Entity\Bookmark;
-use ApiBookmark\Entity\Perfil;
 use ApiBookmark\Entity\Usuario;
 
 class AbstractDAO {
@@ -49,8 +48,46 @@ class AbstractDAO {
         $this->entityManager->flush();
     }
 
+    public function mudarPerfil($obj) {
+        if($obj->status == '1'){
+            $obj->status = 0;
+        }else{
+            $obj->status = 1;
+        }
+
+        //$this->entityManager->remove($obj);
+        $this->entityManager->merge($obj);
+        $this->entityManager->flush();
+    }
+
     public function buscar($id) {
         $obj = $this->entityManager->find($this->entityPath, $id);
         return $obj;
+    }
+
+    public function listarById($id){
+        $obj = $this->entityManager->getRepository($this->entityPath)->findBy(
+            array('usuario' => $id)
+        );
+        return $obj;
+    }
+
+    public function validaUsuario($username, $password){ //echo $this->entityPath; exit;
+        $usuario = $this->entityManager
+            ->getRepository($this->entityPath)
+            ->findOneBy(array(
+                'username' => $username,
+                'password' => $password
+            ));
+
+        if(!empty($usuario)){
+            if($usuario->status == 1) {
+                return $usuario;
+            }else{
+                return ['tipoMensagem' => 'warning', 'mensagem' => 'Este usuário foi desativado, entre em contato com o administrador do site!'];
+            }
+        }else{
+            return ['tipoMensagem' => 'warning', 'mensagem' => 'Username ou password incorretos, tente novamente!'];
+        }
     }
 }

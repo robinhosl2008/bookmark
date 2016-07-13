@@ -4,7 +4,6 @@ namespace ApiBookmark\Controller;
 
 use ApiBookmark\Entity\Usuario;
 use ApiBookmark\Persistence\UsuarioDAO;
-use ApiBookmark\Persistence\PerfilDAO;
 
 class UsuarioController {
 
@@ -44,12 +43,15 @@ class UsuarioController {
 
     public function insert($json){
         $usuario = new Usuario();
-        $usuario->setNoUsuario($json->noUsuario);
-        $usuario->setPerfil($json->perfil);
+        $usuario->setRole($json->role);
+        $usuario->setStatus($json->status);
+        $usuario->setNome($json->nome);
+        $usuario->setSobrenome($json->sobrenome);
         $usuario->setEmail($json->email);
-        $usuario->setLogin($json->login);
-        $usuario->setSenha($json->senha);
-        $usuario->setDataCad(new \DateTime());
+        $usuario->setUsername($json->username);
+        $usuario->setPassword($json->password);
+        $usuario->setCreatedAt(new \DateTime());
+        $usuario->setUpdatedAt(new \DateTime());
 
         $this->getDao()->cadastrar($usuario);
         return ['mensagem' => 'Usuário cadastrado com sucesso!'];
@@ -59,9 +61,12 @@ class UsuarioController {
         $usuario = $this->getDao()->buscar($json->id);
 
         if(isset($usuario)){
-            $usuario->setNoUsuario($json->noUsuario);
-            $usuario->setPerfil($json->perfil);
+            $usuario->setNome($json->nome);
+            $usuario->setSobrenome($json->sobrenome);
             $usuario->setEmail($json->email);
+            $usuario->setRole($json->role);
+            $usuario->setUsername($json->username);
+            $usuario->setUpdatedAt(new \DateTime());
 
             $this->getDao()->editar($usuario);
             return ['mensagem' => 'Usuário editado com sucesso!'];
@@ -74,10 +79,17 @@ class UsuarioController {
         $usuario = $this->getDao()->buscar($json->id);
 
         if(isset($usuario)){
-            $this->getDao()->deletar($usuario);
+            $this->getDao()->mudarPerfil($usuario);
             return ['mensagem' => 'Usuário excluido com sucesso!'];
         }else{
             return ['mensagem' => 'Registro não encontrado'];
         }
+    }
+
+    public function loginCheck($json){
+        $username = $json->username;
+        $password = $json->password;
+
+        return $this->getDao()->validaUsuario($username, $password);
     }
 }

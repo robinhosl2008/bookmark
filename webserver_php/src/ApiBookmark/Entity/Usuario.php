@@ -18,49 +18,78 @@ class Usuario extends Entidade {
     public $id;
 
     /**
-     * @Column(type="integer")
+     * @Column(type="string", columnDefinition="ENUM('ROLE_ADMIN', 'ROLE_USER')", length=100)
      */
-    public $perfil;
+    public $role;
 
     /**
-     * @Column(type="string", length=255)
+     * @Column(type="boolean")
      */
-    public $noUsuario;
+    public $status;
 
     /**
-     * @Column(type="string", length=255)
+     * @Column(type="string", length=100)
+     */
+    public $nome;
+
+    /**
+     * @Column(type="string", length=100)
+     */
+    public $sobrenome;
+
+    /**
+     * @Column(type="string", length=100)
      */
     public $email;
 
     /**
-     * @Column(type="string", length=255)
+     * @Column(type="string", length=100)
      */
-    public $login;
+    public $username;
 
     /**
-     * @Column(type="string", length=255)
+     * @Column(type="string", length=100)
      */
-    public $senha;
+    public $password;
 
     /**
      * @DateTime
      * @Column(type="datetime")
      */
-    public $dataCad;
+    public $createdAt;
 
-    function __construct($id = "", $perfil = "", $noUsuario = "", $email = "", $login = "", $senha = "", $dataCad = "")
+    /**
+     * @DateTime
+     * @Column(type="datetime")
+     */
+    public $updatedAt;
+
+    function __construct(
+        $id = "",
+        $role = "",
+        $status = "",
+        $nome = "",
+        $sobrenome = "",
+        $email = "",
+        $username = "",
+        $password = "",
+        $createdAt = "",
+        $updatedAt = "")
     {
         $this->id = $id;
-        $this->perfil = $perfil;
-        $this->noUsuario = $noUsuario;
+        $this->role = $role;
+        $this->status = $status;
+        $this->nome = $nome;
+        $this->sobrenome = $sobrenome;
         $this->email = $email;
-        $this->login = $login;
-        $this->senha = $senha;
-        $this->dataCad = $dataCad;
+        $this->username = $username;
+        $this->password = $password;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getId()
     {
@@ -68,7 +97,7 @@ class Usuario extends Entidade {
     }
 
     /**
-     * @param mixed $id
+     * @param $id
      */
     public function setId($id)
     {
@@ -76,39 +105,71 @@ class Usuario extends Entidade {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPerfil()
+    public function getRole()
     {
-        return $this->perfil;
+        return $this->role;
     }
 
     /**
-     * @param mixed $perfil
+     * @param $role
      */
-    public function setPerfil($perfil)
+    public function setRole($role)
     {
-        $this->perfil = $perfil;
+        $this->role = $role;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getNoUsuario()
+    public function getStatus()
     {
-        return $this->noUsuario;
+        return $this->status;
     }
 
     /**
-     * @param mixed $noUsuario
+     * @param $status
      */
-    public function setNoUsuario($noUsuario)
+    public function setStatus($status)
     {
-        $this->noUsuario = $noUsuario;
+        $this->status = $status;
     }
 
     /**
-     * @return mixed
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * @param $nome
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSobrenome()
+    {
+        return $this->sobrenome;
+    }
+
+    /**
+     * @param $sobrenome
+     */
+    public function setSobrenome($sobrenome)
+    {
+        $this->sobrenome = $sobrenome;
+    }
+
+    /**
+     * @return string
      */
     public function getEmail()
     {
@@ -116,7 +177,7 @@ class Usuario extends Entidade {
     }
 
     /**
-     * @param mixed $email
+     * @param $email
      */
     public function setEmail($email)
     {
@@ -124,51 +185,67 @@ class Usuario extends Entidade {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLogin()
+    public function getUsername()
     {
-        return $this->login;
+        return $this->username;
     }
 
     /**
-     * @param mixed $login
+     * @param $username
      */
-    public function setLogin($login)
+    public function setUsername($username)
     {
-        $this->login = $login;
+        $this->username = $username;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSenha()
+    public function getPassword()
     {
-        return $this->senha;
+        return $this->password;
     }
 
     /**
-     * @param mixed $senha
+     * @param $password
      */
-    public function setSenha($senha)
+    public function setPassword($password)
     {
-        $this->senha = $senha;
+        $this->password = $password;
     }
 
     /**
      * @return \DateTime
      */
-    public function getDataCad()
+    public function getCreatedAt()
     {
-        return $this->dataCad;
+        return $this->createdAt;
     }
 
     /**
-     * @param \DateTime $dataCad
+     * @param \DateTime $createdAt
      */
-    public function setDataCad($dataCad)
+    public function setCreatedAt($createdAt)
     {
-        $this->dataCad = $dataCad;
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -176,12 +253,15 @@ class Usuario extends Entidade {
      */
     public function toString(){
         return "[id:"       .$this->id.
-             "] [noUsuario:".$this->noUsuario.
+             "] [role:"     .$this->role.
+             "] [status:"   .$this->status.
+             "] [nome:"     .$this->nome.
+             "] [sobrenome:".$this->sobrenome.
              "] [email:"    .$this->email.
-             "] [perfil:"   .$this->perfil.
-             "] [login:"    .$this->login.
-             "] [senha:"    .$this->senha.
-             "] [dataCad"   .$this->dataCad."]";
+             "] [username:" .$this->username.
+             "] [password:" .$this->password.
+             "] [createdAt" .$this->createdAt.
+             "] [updatedAt" .$this->updatedAt."]";
     }
 
     /**
@@ -190,12 +270,15 @@ class Usuario extends Entidade {
     public function toArray(){
         return [
             'id'        => $this->id,
-            'noUsuario' => $this->noUsuario,
+            'role'      => $this->role,
+            'status'    => $this->status,
+            'nome'      => $this->nome,
+            'sobrenome' => $this->sobrenome,
             'email'     => $this->email,
-            'perfil'    => $this->perfil,
-            'login'     => $this->login,
-            'senha'     => $this->senha,
-            'dataCad'   => $this->dataCad
+            'username'  => $this->username,
+            'password'  => $this->password,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt
         ];
     }
 }

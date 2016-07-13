@@ -4,31 +4,71 @@
 
 {% block body %}
     <div class="col-sm-12">
-        <h3>Edição de Usuário</h3>
+
+        {% if sessionRole != 'ROLE_ADMIN' or usuario.id == sessionId %}
+            <h3>Edição de Usuário</h3>
+        {% else %}
+            <h3>Alterar perfil do usuário</h3>
+        {% endif %}
+
         <form method="post" action="">
-            <input type="hidden" id="id" name="id" value="{% if(usuario) %}{{ usuario.id }}{% endif %}" />
+            <input type="hidden" id="id" name="id"
+                   value="{% if usuario %}{{ usuario.id }}{% endif %}" />
+            <input type="hidden" id="role" name="role"
+                   value="{% if usuario %}{{ usuario.role }}{% endif %}" />
 
-            <div class="form-group">
-                <label for="noUsuario">Nome: </label>
-                <input type="text" class="form-control" id="noUsuario" name="noUsuario"
-                       value="{% if(usuario) %}{{ usuario.noUsuario }}{% endif %}" />
-            </div>
+            {% if sessionRole != 'ROLE_ADMIN' or usuario.id == sessionId %}
+                <div class="form-group">
+                    <label for="nome">Nome: </label>
+                    <input type="text" class="form-control" id="nome" name="nome"
+                           required oninvalid="setCustomValidity('Informe o seu nome!')"
+                           onchange="try{setCustomValidity('')}catch(e){}"
+                           value="{% if usuario %}{{ usuario.nome }}{% endif %}"/>
+                </div>
 
-            <div class="form-group">
-                <label for="email">E-mail: </label>
-                <input type="text" class="form-control" id="email" name="email"
-                       value="{% if(usuario) %}{{ usuario.email }}{% endif %}" />
-            </div>
+                <div class="form-group">
+                    <label for="sobrenome">Sobreome: </label>
+                    <input type="text" class="form-control" id="sobrenome" name="sobrenome"
+                           required oninvalid="setCustomValidity('Informe o seu sobrenome!')"
+                           onchange="try{setCustomValidity('')}catch(e){}"
+                           value="{% if usuario %}{{ usuario.sobrenome }}{% endif %}"/>
+                </div>
 
-            <div class="form-group">
-                <label for="perfil">Perfil: </label>
-                <select class="form-control" id="perfil" name="perfil">
-                    <option value="0">Selecione...</option>
-                    {% for perfil in perfis %}
-                        <option value="{{ perfil.id }}" {% if perfil.id == usuario.perfil %} selected="selected" {% endif %}>{{ perfil.noPerfil }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="email">E-mail: </label>
+                    <input type="text" class="form-control" id="email" name="email"
+                           required oninvalid="setCustomValidity('Informe o seu e-mail!')"
+                           onchange="try{setCustomValidity('')}catch(e){}"
+                           value="{% if usuario %}{{ usuario.email }}{% endif %}"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username: </label>
+                    <input type="text" class="form-control" id="username" name="username"
+                           required oninvalid="setCustomValidity('Informe o seu username!')"
+                           onchange="try{setCustomValidity('')}catch(e){}"
+                           value="{% if usuario %}{{ usuario.username }}{% endif %}"/>
+                </div>
+
+            {% else %}
+                <p><label>Nome: </label> {{ usuario.nome }} {{ usuario.sobrenome }}</p>
+                <p><label>E-mail: </label> {{ usuario.email }}</p>
+                <p><label>Username: </label> {{ usuario.username }}</p>
+                <p><label>Data de Cadastro: </label> {{ usuario.createdAt }}</p>
+                {% if usuario.createdAt != usuario.updatedAt %}
+                    <p><label>Data de Alteração: </label> {{ usuario.updatedAt }}</p>
+                {% endif %}
+            {% endif %}
+
+            {% if sessionRole == 'ROLE_ADMIN' %}
+                <div class="form-group">
+                    <label for="role">Perfil: </label>
+                    <select class="form-control" id="role" name="role">
+                        <option value="ROLE_ADMIN" {% if usuario.role == 'ROLE_ADMIN' %}{{ 'selected' }}{% endif %}>Administrador</option>
+                        <option value="ROLE_USER" {% if usuario.role == 'ROLE_USER' %}{{ 'selected' }}{% endif %}>Cliente</option>
+                    </select>
+                </div>
+            {% endif %}
 
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Salvar" />

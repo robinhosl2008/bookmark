@@ -5,25 +5,37 @@
 {% block body %}
     <div class="col-sm-12">
         <div>
-            <a href="http://localhost:8001/bookmark/cadastrar" class="btn btn-primary" >Cadastrar Bookmark</a>
+            {% if sessionRole and sessionRole == 'ROLE_ADMIN' %}
+                {% if bookmarks and sessionId == bookmarks[0].usuario %}
+                    <a href="http://localhost:8001/bookmark/cadastrar" class="btn btn-primary" >Cadastrar Bookmark</a>
+                {% endif %}
+            {% elseif sessionRole and sessionRole == 'ROLE_USER' %}
+                <a href="http://localhost:8001/bookmark/cadastrar" class="btn btn-primary" >Cadastrar Bookmark</a>
+            {% endif %}
+            <input type="button" class="btn btn-default" value="Voltar" onclick="javascript:history.go(-1)" />
         </div>
 
         <div style="padding-top: 20px">
+
             <table class="table table-bordered">
                 <thead>
                 <tr style="background-color: dodgerblue">
                     <td>BOOKMARKS</td>
-                    <td>AÇÕES</td>
+                    {% if bookmarks and sessionId == bookmarks[0].usuario %}
+                        <td>AÇÕES</td>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
                 {% for bookmark in bookmarks %}
                     <tr>
-                        <td>{{ bookmark.noBookmark }}</td>
-                        <td>
-                            <a href="/bookmark/editar/{{ bookmark.id }}"><label class="glyphicon glyphicon-pencil"></label></a>
-                            <a href="/bookmark/deletar/{{ bookmark.id }}"><label style="color: darkred" class="glyphicon glyphicon-remove"></label></a>
-                        </td>
+                        <td><a style="text-decoration-line: none" href="https://{{ bookmark.noBookmark }}" target="_blank">{{ bookmark.noBookmark }}</a></td>
+                        {% if bookmarks and sessionId == bookmarks[0].usuario %}
+                            <td>
+                                <a href="/bookmark/editar/{{ bookmark.id }}"><label class="glyphicon glyphicon-pencil"></label></a>
+                                <a href="/bookmark/deletar/{{ bookmark.id }}"><label style="color: darkred" class="glyphicon glyphicon-remove"></label></a>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

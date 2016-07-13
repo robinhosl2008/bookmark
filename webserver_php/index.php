@@ -3,11 +3,9 @@
 // Carrega o autoload.php.
 $loader = require __DIR__.'/vendor/autoload.php';
 
-use ApiBookmark\Controller\PerfilController;
 use ApiBookmark\Controller\BookmarkController;
 use ApiBookmark\Controller\UsuarioController;
 
-$perfilCtrl = new PerfilController();
 $bootmarkCtrl = new BookmarkController();
 $usuarioCtrl = new UsuarioController();
 
@@ -19,30 +17,6 @@ $app->get('/', function(){
         'version' => '1.0.0'
     ]);
 });
-
-// Sessão que cuida da entidade Perfil.
-$app->get('/perfil(/(:id))', function($id = null) use ($perfilCtrl){
-    echo json_encode($perfilCtrl->get($id));
-});
-
-$app->post('/perfil(/)', function() use ($perfilCtrl){
-    $app = \Slim\Slim::getInstance();
-    $json = json_decode($app->request()->getBody());
-    echo json_encode($perfilCtrl->insert($json));
-});
-
-$app->put('/perfil(/)', function() use ($perfilCtrl){
-    $app = \Slim\Slim::getInstance();
-    $json = json_decode($app->request()->getBody());
-    echo json_encode($perfilCtrl->update($json));
-});
-
-$app->delete('/perfil(/)', function() use ($perfilCtrl){
-    $app = \Slim\Slim::getInstance();
-    $json = json_decode($app->request()->getBody());
-    echo json_encode($perfilCtrl->delete($json));
-});
-// Fim da sessão.
 
 // Sessão que cuida da entidade Usuario.
 $app->get('/usuario(/(:id))', function($id = null) use ($usuarioCtrl){
@@ -65,6 +39,12 @@ $app->delete('/usuario(/)', function() use ($usuarioCtrl){
     $app = \Slim\Slim::getInstance();
     $json = json_decode($app->request()->getBody());
     echo json_encode($usuarioCtrl->delete($json));
+});
+
+$app->post('/usuario/login-check', function() use ($usuarioCtrl){
+    $app = \Slim\Slim::getInstance();
+    $json = json_decode($app->request()->getBody()); //print_r($json); exit;
+    echo json_encode($usuarioCtrl->loginCheck($json));
 });
 // Fim da sessão.
 
@@ -90,6 +70,11 @@ $app->delete('/bookmark(/)', function() use ($bootmarkCtrl){
     $json = json_decode($app->request()->getBody());
     echo json_encode($bootmarkCtrl->delete($json));
 });
+
+$app->get('/bookmark/buscar/:id', function($id = null) use ($bootmarkCtrl){
+    echo json_encode($bootmarkCtrl->buscar($id));
+});
+
 // Fim da sessão.
 
 

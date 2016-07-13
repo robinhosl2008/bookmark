@@ -4,35 +4,44 @@
 
 {% block body %}
     <div class="col-sm-12">
-        <div>
-            <a href="cadastrar" class="btn btn-primary">Cadastrar Usuário</a>
-        </div>
 
         <div style="padding-top: 20px">
-            <table class="table table-bordered table-responsive">
+            <table class="table table-bordered table-responsive table-condensed">
                 <thead>
                     <tr style="background-color: dodgerblue">
                         <td>USUARIOS</td>
-                        <td>E-MAIL</td>
-                        <td>PERFIL</td>
+                        <td>STATUS</td>
                         <td>AÇÕES</td>
                     </tr>
                 </thead>
                 <tbody>
                 {% for usuario in usuarios %}
                     <tr>
-                        <td>{{ usuario.noUsuario }}</td>
-                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.nome }} {{ usuario.sobrenome }}</td>
                         <td>
-                            {% for perfil in perfis %}
-                                {% if perfil.id == usuario.perfil %}
-                                    {{ perfil.noPerfil }}
-                                {% endif %}
-                            {% endfor %}
+                            {% if usuario.status == 1 %}
+                                {{ 'Ativo' }}
+                            {% elseif usuario.status == 0 %}
+                                {{ 'Inativo' }}
+                            {% endif %}
                         </td>
                         <td>
-                            <a href="/usuario/editar/{{ usuario.id }}"><label class="glyphicon glyphicon-pencil"></label></a>
-                            <a href="/usuario/deletar/{{ usuario.id }}"><label style="color: darkred" class="glyphicon glyphicon-remove"></label></a>
+                            <a href="/bookmark/buscar/{{ usuario.id }}" title="Exibir Bookmarks"><label class="glyphicon glyphicon-th-list"></label></a>
+                            <a href="/usuario/editar/{{ usuario.id }}" title="Editar Usuário"><label class="glyphicon glyphicon-pencil"></label></a>
+                            <a href="/usuario/deletar/{{ usuario.id }}"
+                                    {% if usuario.status == 1 %}
+                                        title="Desativar Usuário"
+                                    {% else %}
+                                        title="Ativar Usuário"
+                                    {% endif %}
+                               ><label
+                                    {% if usuario.status == 1 %}
+                                        style="color: darkred"
+                                        class="glyphicon glyphicon-remove"
+                                    {% else %}
+                                        class="glyphicon glyphicon-ok"
+                                    {% endif %}
+                                ></label></a>
                         </td>
                     </tr>
                 {% endfor %}

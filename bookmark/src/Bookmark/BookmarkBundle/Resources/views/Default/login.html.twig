@@ -1,0 +1,48 @@
+{% extends "BookmarkBundle::Layout/layout.html.twig" %}
+
+{% block title %}Tela de login{% endblock %}
+
+{% block body %}
+
+    <div class="col-sm-12">
+
+        {% if mensagem != "" %}
+            <div class="row esconder">
+                <div class="col-sm-12">
+                    <div class="alert alert-{{ tipoMensagem }} alert-dismissible" role="alert">
+                        <button type="button" onclick="esconderMensagem()" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Atenção!</strong> {{ mensagem }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="col-sm-12">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-7" style="border: solid; padding: 10px 10px 10px 10px; width: 280px;">
+                <form action="login-check" method="post" name="form_login" class="form-group">
+                    <div>
+                        <label for="username">Username:</label>
+                        <input class="form-control" type="text" id="username" name="username"
+                               required oninvalid="setCustomValidity('Informe o seu nome de usuário!')"
+                               onchange="try{setCustomValidity('')}catch(e){}"/>
+                    </div>
+
+                    <div>
+                        <label for="password">Password:</label>
+                        <input class="form-control" type="password" id="password" name="password"
+                               required oninvalid="setCustomValidity('Informe a sua senha!')"
+                               onchange="try{setCustomValidity('')}catch(e){}"/>
+                    </div>
+
+                    <div style="padding-top: 10px">
+                        <button style="width: 100%;" class="btn btn-primary btn-sm" onclick="return validar()" type="submit">login</button>
+                    </div>
+                </form>
+                <a href="/usuario/cadastrar" style="text-decoration-line: none">Quero me cadastrar!</a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

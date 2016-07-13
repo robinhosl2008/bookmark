@@ -3,46 +3,66 @@
 {% block title %}Cadastro de usuarios{% endblock %}
 
 {% block body %}
+
+    <div class="row esconder" style="display: none">
+        <div class="col-sm-12">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" onclick="esconderMensagem()" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Atenção!</strong> As senhas não são iguais.
+            </div>
+        </div>
+    </div>
+
     <div class="col-sm-12">
         <h3>Cadastro de Usuário</h3>
-        <form method="post" action="">
+        <form method="post" name="cad_usuario" action="">
 
             <div class="form-group">
-                <label for="noUsuario">Nome: </label>
-                <input type="text" class="form-control" id="noUsuario" name="noUsuario" />
+                <label for="nome">Nome: </label>
+                <input type="text" class="form-control" id="nome" name="nome"
+                       required oninvalid="setCustomValidity('Informe o seu nome!')"
+                       onchange="try{setCustomValidity('')}catch(e){}" />
+            </div>
+
+            <div class="form-group">
+                <label for="sobrenome">Sobreome: </label>
+                <input type="text" class="form-control" id="sobrenome" name="sobrenome"
+                       required oninvalid="setCustomValidity('Informe o seu sobrenome!')"
+                       onchange="try{setCustomValidity('')}catch(e){}" />
             </div>
 
             <div class="form-group">
                 <label for="email">E-mail: </label>
-                <input type="text" class="form-control" id="email" name="email" />
+                <input type="text" class="form-control" id="email" name="email"
+                       required oninvalid="setCustomValidity('Informe o seu e-mail!')"
+                       onchange="try{setCustomValidity('')}catch(e){}" />
             </div>
 
             <div class="form-group">
-                <label for="perfil">Perfil: </label>
-                <select class="form-control" id="perfil" name="perfil">
-                    <option value="0">Selecione...</option>
-                    {% for perfil in perfis %}
-                        <option value="{{ perfil.id }}">{{ perfil.noPerfil }}</option>
-                    {% endfor %}
+                <label for="role">Perfil: </label>
+                <select class="form-control" id="role" name="role">
+                    {% if sessionRole and sessionRole == 'ROLE_ADMIN' %}
+                        <option value="ROLE_ADMIN">Administrador</option>
+                    {% endif %}
+                    <option value="ROLE_USER" selected>Cliente</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="login">Nome de usuário: </label>
-                <input type="text" class="form-control" id="login" name="login" />
+                <label for="username">Usuário: </label>
+                <input type="text" class="form-control" id="username" name="username"
+                       required oninvalid="setCustomValidity('Informe o seu nome de usuário!')"
+                       onchange="try{setCustomValidity('')}catch(e){}" />
             </div>
 
             <div class="form-group">
-                <label for="senha">Senha: </label>
-                <input type="password" class="form-control" id="senha" name="senha" />
+                <label for="password">Senha: </label>
+                <input type="password" class="form-control" id="password" name="password"
+                       required oninvalid="setCustomValidity('Informe a sua senha!')"
+                       onchange="try{setCustomValidity('')}catch(e){}" />
             </div>
 
-            <div class="form-group">
-                <label for="confirmSenha">Confirmar senha: </label>
-                <input type="password" class="form-control" id="confirmSenha" name="confirmSenha" />
-            </div>
-
-
+            <p>Todos os campos são obrigatórios!</p>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Salvar" />
                 <input type="button" class="btn btn-default" value="Voltar" onclick="javascript:history.go(-1)" />

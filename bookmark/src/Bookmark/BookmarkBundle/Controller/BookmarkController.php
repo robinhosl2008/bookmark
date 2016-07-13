@@ -16,10 +16,12 @@ class BookmarkController extends Controller
 {
     private $uri = "";
     private $client = "";
+    public $defaultCtrl = '';
 
     public function __construct(){
         $this->uri = "http://localhost:8000/bookmark";
         $this->client = new Client();
+        $this->defaultCtrl = new DefaultController();
     }
 
     /**
@@ -27,13 +29,30 @@ class BookmarkController extends Controller
      */
     public function listarAction()
     {
-        // Retorna a listagem de bookmarks da API.
-        $result = $this->client->get($this->uri);
+        if(empty($_SESSION['usuarioID'])){
+            return $this->redirect('/');
+        }else{
+            $session = $this->defaultCtrl->protegePagina();
+        }
+
+        if($_SESSION['usuarioRole'] == 'ROLE_ADMIN') {
+            // Retorna a listagem de bookmarks da API.
+            $result = $this->client->get($this->uri);
+        }else{
+            $result = $this->client->get($this->uri."/buscar/".$_SESSION['usuarioID']);
+        }
 
         // Converte o json em objeto.
         $bookmarks = json_decode($result->getBody()->__toString());
-
-        return $this->render('BookmarkBundle:Bookmark:listar.html.twig', ['bookmarks' => $bookmarks]);
+        //echo "<pre>"; print_r($bookmarks[0]->usuario); exit;
+        //echo "<pre>"; print_r($session['sessionId']); exit;
+        return $this->render('BookmarkBundle:Bookmark:listar.html.twig', [
+            'sessionId' => $session['sessionId'],
+            'sessionRole' => $session['sessionRole'],
+            'sessionNome' => $session['sessionNome'],
+            'sessionSobrenome' => $session['sessionSobrenome'],
+            'bookmarks' => $bookmarks
+        ]);
     }
 
     /**
@@ -41,6 +60,12 @@ class BookmarkController extends Controller
      */
     public function cadastrarAction(Request $request)
     {
+        if(empty($_SESSION['usuarioID'])){
+            return $this->redirect('/');
+        }else{
+            $session = $this->defaultCtrl->protegePagina();
+        }
+
         if($_POST){
             $noBookmark = $request->get('noBookmark');
 
@@ -48,14 +73,24 @@ class BookmarkController extends Controller
                 'json' => [
                     'id'         => '',
                     'noBookmark' => $noBookmark,
-                    'usuario'    => '',
-                    'dataCad'    => ''
+                    'usuario'    => $_SESSION['usuarioID'],
+                    'createdAt'    => '',
+                    'updatedAt'    => ''
                 ]
             ]);
 
-            return $this->redirect('/bookmark/listar');
+            if($session['sessionRole'] == 'ROLE_ADMIN') {
+                return $this->redirect('/usuario/listar');
+            }elseif($session['sessionRole'] == 'ROLE_USER'){
+                return $this->redirect('/bookmark/listar');
+            }
         }else{
-            return $this->render('BookmarkBundle:Bookmark:cadastrar.html.twig', array());
+            return $this->render('BookmarkBundle:Bookmark:cadastrar.html.twig', [
+                'sessionId' => $session['sessionId'],
+                'sessionRole' => $session['sessionRole'],
+                'sessionNome' => $session['sessionNome'],
+                'sessionSobrenome' => $session['sessionSobrenome'],
+            ]);
         }
     }
 
@@ -64,6 +99,12 @@ class BookmarkController extends Controller
      */
     public function editarAction(Request $request)
     {
+        if(empty($_SESSION['usuarioID'])){
+            return $this->redirect('/');
+        }else{
+            $session = $this->defaultCtrl->protegePagina();
+        }
+
         if($_POST){
             // Recupera os dados via post.
             $id = $request->get('id');
@@ -85,7 +126,7 @@ class BookmarkController extends Controller
             $id = $request->get('id');
 
             // Manda a requisição e atribui o resultado a uma variável.
-            $result = $this->client->request('get', $this->uri.'/'.$id, array());
+            $result = $this->client->request('GET', $this->uri.'/'.$id, array());
 
             // Converte a string json em array.
             $arrayBookmark = json_decode($result->getBody()->__toString());
@@ -93,7 +134,13 @@ class BookmarkController extends Controller
             // Pega o objeto dentro do array.
             $bookmark = $arrayBookmark[0];
 
-            return $this->render('BookmarkBundle:Bookmark:editar.html.twig', ['bookmark' => $bookmark]);
+            return $this->render('BookmarkBundle:Bookmark:editar.html.twig', [
+                'sessionId' => $session['sessionId'],
+                'sessionRole' => $session['sessionRole'],
+                'sessionNome' => $session['sessionNome'],
+                'sessionSobrenome' => $session['sessionSobrenome'],
+                'bookmark' => $bookmark
+            ]);
         }
     }
 
@@ -102,6 +149,10 @@ class BookmarkController extends Controller
      */
     public function deletarAction(Request $request)
     {
+        if(empty($_SESSION['usuarioID'])){
+            return $this->redirect('/');
+        }
+
         $id = $request->get('id');
         $this->client->request('DELETE', $this->uri, ['json' => ['id' => $id]]);
 
@@ -109,13 +160,29 @@ class BookmarkController extends Controller
     }
 
     /**
-     * @Route("/buscar")
+     * @Route("/buscar/{id}")
      */
-    public function buscarAction()
+    public function buscarAction(Request $request)
     {
-        return $this->render('BookmarkBundle:Bookmark:buscar.html.twig', array(
-            // ...
-        ));
+        if(empty($_SESSION['usuarioID'])){
+            return $this->redirect('/');
+        }else{
+            $session = $this->defaultCtrl->protegePagina();
+        }
+
+        $id = $request->get('id');
+
+        $result = $this->client->request('GET', $this->uri.'/buscar/'.$id);
+
+        $bookmarks = json_decode($result->getBody()->__toString());
+
+        return $this->render('BookmarkBundle:Bookmark:listar.html.twig', [
+            'sessionId' => $session['sessionId'],
+            'sessionRole' => $session['sessionRole'],
+            'sessionNome' => $session['sessionNome'],
+            'sessionSobrenome' => $session['sessionSobrenome'],
+            'bookmarks' => $bookmarks
+        ]);
     }
 
 }

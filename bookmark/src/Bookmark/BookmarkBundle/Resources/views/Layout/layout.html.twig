@@ -2,48 +2,65 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
 
     <link href="{{ asset('bundles/bookmark/css/bootstrap.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/bookmark/css/bootstrap-theme.min.css') }}" rel="stylesheet"/>
+    <script src="{{ asset('bundles/bookmark/js/jquery-3.0.0.min.js') }}"></script>
     <script src="{{ asset('bundles/bookmark/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bundles/bookmark/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/bookmark/js/collapse.js') }}"></script>
+    <script src="{{ asset('bundles/bookmark/js/bookmark.js') }}"></script>
 </head>
 <body>
-    <div class="row">
-        <div class="col-sm-12">
-            <div id="sidebar">
-                {% block sidebar %}
-                    <nav class="navbar navbar-default">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" href="http://localhost:8001">Bookmark</a>
-                        </div>
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-                                <li><a href="http://localhost:8001/perfil/listar">Perfis</a></li>
-                                <li><a href="http://localhost:8001/usuario/listar">Usuarios</a></li>
-                                <li><a href="http://localhost:8001/bookmark/listar">Bookmarks</a></li>
-                            </ul>
-                        </div>
-                    </nav>
-                {% endblock %}
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a style="color: #ffffff" class="navbar-brand" href="http://localhost:8001">Bookmark</a>
             </div>
-            <div id="body">
-                {% block body %}
 
-                {% endblock %}
-            </div>
-            <div id="footer">
-                {% block footer %}
-
-                {% endblock %}
-            </div>
+            {% if sessionId and sessionId != '' %}
+                <div class="navbar-collapse collapse" id="navbar">
+                    <ul class="nav navbar-nav">
+                        {% if sessionRole and sessionRole == 'ROLE_ADMIN' %}
+                            <li><a style="color: #ffffff" href="http://localhost:8001/usuario/listar">Usuarios</a></li>
+                        {% elseif sessionRole and sessionRole == 'ROLE_USER' %}
+                            <li><a style="color: #ffffff" href="http://localhost:8001/bookmark/listar">Bookmarks</a></li>
+                        {% endif %}
+                        <li role="separator" class="divider"></li>
+                        {% if sessionNome %}
+                        <li style="width: 900px">
+                            <p style="padding-left: 15px; color: #ffffff" class="navbar-text navbar-right">
+                                Oi, {{ sessionNome }} {{ sessionSobrenome }}
+                                <a href="/sair" class="">Sair</a>
+                                <a href="/usuario/editar/{{ sessionId }}">
+                                    <span style="color: #ffffff" title="Editar Perfil" class="glyphicon glyphicon-user"></span>
+                                </a>
+                            </p>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
         </div>
+    </nav>
+
+    <div id="body">
+        {% block body %}
+
+            <img src="{{ asset('bundles/bookmark/images/www.jpg') }}"/>
+        {% endblock %}
+    </div>
+    <div id="footer">
+        {% block footer %}
+
+        {% endblock %}
     </div>
 </body>
 </html>
