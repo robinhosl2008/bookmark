@@ -1,0 +1,86 @@
+-- MySQL dump 10.13  Distrib 5.5.49, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: db_bookmark
+-- ------------------------------------------------------
+-- Server version	5.5.49-0ubuntu0.14.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `bookmark`
+--
+
+DROP TABLE IF EXISTS `bookmark`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bookmark` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `noBookmark` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `usuario` int(11) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bookmark`
+--
+
+LOCK TABLES `bookmark` WRITE;
+/*!40000 ALTER TABLE `bookmark` DISABLE KEYS */;
+INSERT INTO `bookmark` VALUES (1,'www.google.com.br',4,'2016-07-07 15:51:53','2016-07-07 15:51:53'),(4,'www.facebook.com.br',1,'2016-07-07 17:52:50','2016-07-07 17:52:50'),(5,'www.boadica.com.br',4,'2016-07-07 18:12:35','2016-07-07 18:12:35'),(6,'www.ciadocodigo.com.br',1,'2016-07-07 18:13:41','2016-07-07 18:13:41'),(7,'google.com.br',1,'2016-07-12 21:10:57','2016-07-12 21:10:57'),(8,'facebook.com.br',1,'2016-07-12 21:13:18','2016-07-12 21:13:18'),(9,'www.facebook.com.br',4,'2016-07-13 16:16:13','2016-07-13 16:16:13');
+/*!40000 ALTER TABLE `bookmark` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role` enum('ROLE_ADMIN','ROLE_USER') CHARACTER SET utf8 DEFAULT NULL,
+  `status` tinyint(1) NOT NULL,
+  `nome` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `sobrenome` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `username` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'ROLE_ADMIN',1,'Robson','Souza LourenÃ§o','robinhosl2008@gmail.com','robinhosl2008','e7d80ffeefa212b7c5c55700e4f7193e','2016-07-06 15:23:38','2016-07-13 16:15:15'),(4,'ROLE_USER',1,'Maria','Rocha','m.rocha@m.rocha.com.br','m.rocha','fc6f7a2559eb5bb5850a4bb066a9ad95','2016-07-07 14:34:09','2016-07-13 16:16:33');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-07-13 20:02:54
